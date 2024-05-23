@@ -12,8 +12,8 @@ app.get("/", (req, res) => {
 // serve entire styles folder
 app.use(
     "/styles",
-    express.static("../web/styles"),
-    serveIndex("../web/styles", { icons: true })
+    express.static(path.join(__dirname, "../web", "styles")),
+    serveIndex(path.join(__dirname, "../web", "styles"), { icons: true })
 );
 
 const PORT = process.env.port || 3142;
