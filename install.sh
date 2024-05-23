@@ -2,7 +2,7 @@ RPI_RADIO_DIR=$(pwd)
 
 sudo apt-get update
 sudo apt-get install make build-essential libraspberrypi-dev npm
-npm install express
+npm i express multer
 cd && git clone https://github.com/markondej/fm_transmitter
 cd fm_transmitter
 make
