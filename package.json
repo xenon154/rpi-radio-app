@@ -1,7 +1,7 @@
 {
     "name": "rpi-radio-app",
     "version": "1.0.0",
-    "description": "A selfhosted application for Debian to remotely broadcast FM radio from a Raspberry Pi.",
+    "description": "A selfhosted application for Debian to broadcast FM radio on a Raspberry Pi and manage broadcasts from a web browser.",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1 \"test/callbacks.js\"",
@@ -11,7 +11,8 @@
     "keywords": [
         "fm-radio",
         "radio",
-        "raspbian"
+        "raspbian",
+        "fm-broadcast"
     ],
     "author": "xen0n_54",
     "license": "CC-BY-NC-SA-4.0"
