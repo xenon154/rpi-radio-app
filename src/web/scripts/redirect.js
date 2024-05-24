@@ -1,1 +1,3 @@
-window.location.replace("/");
+function redirectToIndex() {
+    window.location.replace("/");
+}
