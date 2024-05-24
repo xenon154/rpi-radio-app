@@ -1,6 +1,6 @@
 function post(path) {
     var request = new XMLHttpRequest();
-    request.open("POST", path, true);
+    request.open("POST", "./" + path, true);
 
     request.onload = function () {
         if (request.status >= 200 && request.status < 400) {
