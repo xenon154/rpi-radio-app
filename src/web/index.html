@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        />
         <link rel="stylesheet" href="styles/main.css" />
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,20 +19,47 @@
         <script src="scripts/update-list.js"></script>
         <script src="scripts/main.js"></script>
 
-        <h1>
+        <h1 class="is-size-1">
             This is a demo page to confirm that rpi-radio-app's web server is up
             and running.
         </h1>
 
-        <form
+        <!-- <form
             action="/api/upload"
             method="post"
             class="upload-form"
             enctype="multipart/form-data"
         >
-            <input type="file" id="mp3-upload" name="song" accept=".mp3,.wav,audio/*" />
+            <input
+                type="file"
+                id="mp3-upload"
+                name="song"
+                accept=".mp3,.wav,audio/*"
+            />
             <input type="submit" />
-        </form>
+        </form> -->
+        
+        <div class="file has-name">
+            <form
+                action="/api/upload"
+                method="post"
+                class="upload-form"
+                enctype="multipart/form-data"
+            >
+                <label class="file-label">
+                    <input class="file-input" type="file" name="resume" />
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label"> Choose a file… </span>
+                    </span>
+                    <!-- TODO: update with filename after upload -->
+                    <span class="file-name"> </span>
+                </label>
+                <input type="submit" />
+            </form>
+        </div>
 
         <ul id="songs"></ul>
     </body>

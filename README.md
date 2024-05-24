@@ -3,8 +3,9 @@
 A web application for Debian to remotely broadcast FM radio from a Raspberry Pi.
 
 # Prerequisites
-- [Node.js](https://nodejs.org)
-- [npm](https://npmjs.org)
+
+-   [Node.js](https://nodejs.org)
+-   [npm](https://npmjs.org)
 
 # Install
 
@@ -20,8 +21,9 @@ Once the app finishes installing, you can run rpi-radio-app with `npm start` or 
 
 # Credits
 
-### Libraries
+### Libraries/frameworks
 
 -   [Bulma](https://bulma.io)
+-   [Fontawesome](https://fontawesome.com)
 
 Licensed under CC BY-NC-SA 4.0
