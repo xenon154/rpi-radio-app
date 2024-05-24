@@ -1,1 +1,3 @@
-setInterval(updateList, 1000);
+setInterval(() => {
+    updateList();
+}, 1000);
