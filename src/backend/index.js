@@ -11,7 +11,15 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-const upload = multer({ dest: "uploads" });
+const storageConfig = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "uploads");
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+const upload = multer({ storageConfig });
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../web", "index.html"));
@@ -25,7 +33,7 @@ app.use(
 );
 
 app.post("/api/upload", upload.single("song"), (req, res) => {
-    res.send("File uploaded.")
+    res.send("File uploaded.");
 });
 
 io.on("connection", (socket) => {
