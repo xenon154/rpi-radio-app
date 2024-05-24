@@ -7,6 +7,7 @@ async function updateList() {
             let ul = document.querySelector("ul");
             let li = document.createElement("li");
             li.innerText = song;
+            li.id = "song-" + songs.indexOf(song);
 
             ul.appendChild(li);
 
@@ -17,6 +18,8 @@ async function updateList() {
     listedSongs.forEach((song, i) => {
         // means it was deleted
         if (!songs.includes(song)) {
+            let li = document.querySelector("#song-" + i);
+            document.removeChild(li);
             listedSongs.splice(i, 1);
         }
     });
