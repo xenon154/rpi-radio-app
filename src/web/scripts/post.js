@@ -1,7 +1,5 @@
-function req(type, path) {
-    fetch("./" + (path || ""), { method: type.toLowerCase() || "get" })
-        .then((response) => response.json())
-        .then((json) => {
-            return json;
-        });
+async function req(type, path) {
+    await fetch("./" + (path || ""), { method: type.toLowerCase() || "get" });
+    let json = await response.json();
+    return json;
 }

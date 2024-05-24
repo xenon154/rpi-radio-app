@@ -1,6 +1,6 @@
 let listedSongs = [];
 
-setInterval(() => {
-    let songs = req("get", "api/uploads");
+setInterval(async () => {
+    let songs = await req("get", "api/uploads");
     console.log(songs);
 }, 2500);
