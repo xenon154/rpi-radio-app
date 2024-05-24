@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../web", "index.html"));
 });
 
-// serve entire folder
+// serve entire folders
 app.use(
     "/styles",
     express.static(path.join(__dirname, "../web", "styles")),
