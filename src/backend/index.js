@@ -45,6 +45,12 @@ app.use(
     serveIndex(path.join(__dirname, "../web", "scripts"), { icons: true })
 );
 
+app.use(
+    "/uploads/audio",
+    express.static(path.join(__dirname, "../..", "uploads")),
+    serveIndex(path.join(__dirname, "../web", "scripts"), { icons: true })
+);
+
 app.post("/api/upload", upload.single("song"), (req, res) => {
     res.send("File uploaded.");
 });
