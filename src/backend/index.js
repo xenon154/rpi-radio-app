@@ -52,7 +52,7 @@ app.use(
 );
 
 app.post("/api/upload", upload.single("song"), (req, res) => {
-    res.send("File uploaded.");
+    res.sendFile(path.join(__dirname, "../web", "redirect.html"));
 });
 
 app.get("/api/uploads", (req, res) => {
