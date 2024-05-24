@@ -43,20 +43,16 @@ app.post("/api/upload", upload.single("song"), (req, res) => {
     res.send("File uploaded.");
 });
 
-app.get("/api/uploads", async (req, res) => {
-    let fileArray = [];
-    await fs.readdir("uploads", (err, files) => {
+app.get("/api/uploads", (req, res) => {
+    fs.readdir("uploads", (err, files) => {
         if (err) {
             console.error("Error: " + err);
             res.send([]);
             return null;
         }
-        files.forEach((file) => {
-            fileArray.push(file);
-        });
-    });
 
-    res.send(fileArray);
+        res.send(files);
+    });
 });
 
 io.on("connection", (socket) => {
