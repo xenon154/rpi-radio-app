@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
             null,
             path.parse(file.originalname).name +
                 "-" +
-                Date.now() +
+                Math.round(Math.random() * 1e4) +
                 path.extname(file.originalname)
         );
     }
