@@ -11,7 +11,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-const upload = multer({ dest: "/uploads" });
+const upload = multer({ dest: "uploads" });
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../web", "index.html"));
