@@ -7,7 +7,6 @@ sudo npm i express multer serve-index socket.io
 cd
 if test -d ~/fm_transmitter; then
   echo "FM transmitter directory already present. If this is a mistake, please remove the directory at ~/fm_transmitter."
-fi
 else 
     git clone https://github.com/markondej/fm_transmitter
     cd fm_transmitter
