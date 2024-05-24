@@ -19,7 +19,7 @@ async function updateList() {
         // means it was deleted
         if (!songs.includes(song)) {
             let li = document.querySelector("#song-" + i);
-            document.removeChild(li);
+            li.parentElement.removeChild(li);
             listedSongs.splice(i, 1);
         }
     });
