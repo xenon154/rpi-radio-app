@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         cb(
             null,
-            path.parse(file.originalname).name +
+            path.parse(file.originalname).name.split(" ").join("-") +
                 "-" +
                 Math.round(Math.random() * 1e6) +
                 path.extname(file.originalname)
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../web", "index.html"));
 });
 
-// serve entire styles folder
+// serve entire folder
 app.use(
     "/styles",
     express.static(path.join(__dirname, "../web", "styles")),
