@@ -27,7 +27,6 @@ app.use(
 app.post("/api/upload", upload.single("song"), (req, res) => {
     res.send("File uploaded successfully.");
     res.redirect("/");
-    res.stop()
 });
 
 io.on("connection", (socket) => {

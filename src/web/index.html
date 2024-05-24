@@ -12,9 +12,22 @@
             and running.
         </h1>
 
-        <form action="/api/upload" method="post">
-            <input type="file" id="mp3-upload" name="filename" accept=".mp3,.wav" />
+        <form action="/api/upload" method="post" class="upload-form">
+            <input
+                type="file"
+                id="mp3-upload"
+                name="filename"
+                accept=".mp3,.wav"
+            />
             <input type="submit" />
         </form>
+
+        <script>
+            document
+                .querySelector(".upload-form")
+                .addEventListener("submit", function () {
+                    window.location.href = "/";
+                });
+        </script>
     </body>
 </html>
