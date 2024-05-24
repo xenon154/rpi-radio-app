@@ -24,7 +24,9 @@ app.use(
     serveIndex(path.join(__dirname, "../web", "styles"), { icons: true })
 );
 
-app.post("/api/upload", upload.single("song"));
+app.post("/api/upload", upload.single("song"), (req, res) => {
+    res.send("File uploaded.")
+});
 
 io.on("connection", (socket) => {
     console.log("New connection");
