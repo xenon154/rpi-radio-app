@@ -11,15 +11,15 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-const storageConfig = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "uploads");
+        cb(null, "/uploads");
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
     }
 });
-const upload = multer({ storageConfig });
+const upload = multer({ storage });
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../web", "index.html"));
