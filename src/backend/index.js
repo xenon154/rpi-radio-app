@@ -43,9 +43,9 @@ app.post("/api/upload", upload.single("song"), (req, res) => {
     res.send("File uploaded.");
 });
 
-app.get("/api/uploads", (req, res) => {
+app.get("/api/uploads", async (req, res) => {
     let fileArray = [];
-    fs.readdir("uploads", (err, files) => {
+    await fs.readdir("uploads", (err, files) => {
         if (err) {
             console.error("Error: " + err);
             res.send([]);
