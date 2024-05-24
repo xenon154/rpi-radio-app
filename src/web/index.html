@@ -7,19 +7,24 @@
         <title>rpi-radio-app</title>
     </head>
     <body>
+        <script src="scripts/post.js"></script>
+        <script src="scripts/update-list.js"></script>
+
         <h1>
             This is a demo page to confirm that rpi-radio-app's web server is up
             and running.
         </h1>
 
-        <form action="/api/upload" method="post" class="upload-form" enctype="multipart/form-data">
-            <input
-                type="file"
-                id="mp3-upload"
-                name="song"
-                accept=".mp3,.wav"
-            />
+        <form
+            action="/api/upload"
+            method="post"
+            class="upload-form"
+            enctype="multipart/form-data"
+        >
+            <input type="file" id="mp3-upload" name="song" accept=".mp3,.wav" />
             <input type="submit" />
         </form>
+
+        <ul id="songs"></ul>
     </body>
 </html>

@@ -5,9 +5,17 @@ function post(path) {
     request.onload = function () {
         if (request.status >= 200 && request.status < 400) {
             // Success!
-            var resp = request.responseText;
+            let resp = request.responseText;
+
+            return resp;
         } else {
             // We reached our target server, but it returned an error
+            console.error(
+                "The server returned an error with a status of " +
+                    request.status
+            );
+
+            return null;
         }
     };
 
