@@ -11,5 +11,10 @@
             This is a demo page to confirm that rpi-radio-app's web server is up
             and running.
         </h1>
+
+        <form action="/api/upload" method="post">
+            <input type="file" id="mp3-upload" name="filename" accept=".mp3,.wav" />
+            <input type="submit" />
+        </form>
     </body>
 </html>
