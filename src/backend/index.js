@@ -1,9 +1,10 @@
 const { exec } = require("child_process");
-const express = require("express");
-const path = require("path");
-const serveIndex = require("serve-index");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
+const serveIndex = require("serve-index");
 const multer = require("multer");
 
 const app = express();
@@ -20,7 +21,7 @@ const storage = multer.diskStorage({
             null,
             path.parse(file.originalname).name +
                 "-" +
-                Math.round(Math.random() * 1e4) +
+                Math.round(Math.random() * 1e6) +
                 path.extname(file.originalname)
         );
     }
@@ -40,6 +41,22 @@ app.use(
 
 app.post("/api/upload", upload.single("song"), (req, res) => {
     res.send("File uploaded.");
+});
+
+app.get("/api/uploads", (req, res) => {
+    let fileArray = [];
+    fs.readdir("uploads", (err, files) => {
+        if (err) {
+            console.error("Error: " + err);
+            res.send([]);
+            return null;
+        }
+        files.forEach((file) => {
+            fileArray.push(file);
+        });
+    });
+
+    res.send(fileArray);
 });
 
 io.on("connection", (socket) => {
