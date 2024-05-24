@@ -21,5 +21,3 @@ async function updateList() {
         }
     });
 }
-
-setInterval(updateList, 2500);
