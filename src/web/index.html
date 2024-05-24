@@ -5,11 +5,11 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>rpi-radio-app</title>
-    </head>
-    <body>
-        <script src="scripts/post.js"></script>
-        <script src="scripts/update-list.js"></script>
 
+        <script defer src="scripts/post.js"></script>
+        <script defer src="scripts/update-list.js"></script>
+    </head>
+    <body onload="updateList()">
         <h1>
             This is a demo page to confirm that rpi-radio-app's web server is up
             and running.
