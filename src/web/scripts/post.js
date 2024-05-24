@@ -5,9 +5,6 @@ function req(type, path) {
     request.onload = function () {
         if (request.status >= 200 && request.status < 400) {
             // Success!
-            let resp = request.responseText;
-
-            return resp;
         } else {
             // We reached our target server, but it returned an error
             console.error(
