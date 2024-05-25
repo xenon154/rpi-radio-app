@@ -34,28 +34,36 @@ let currSong = 0;
 let songCmd;
 
 function playSong(fn) {
-    let mp3ToWav = spawn(`sox`, [
-        `${path.resolve("uploads/" + fn.toString())}`,
-        `${path.resolve("uploads/" + path.parse(fn).name + ".wav")}`
-    ]);
+    if (!path.resolve("uploads/" + path.parse(fn).name + ".wav")) {
+        let mp3ToWav = spawn(`sox`, [
+            `${path.resolve("uploads/" + fn.toString())}`,
+            `${path.resolve("uploads/" + path.parse(fn).name + ".wav")}`
+        ]);
+    }
 
     let processes = new Promise((resolve, reject) => {
-        mp3ToWav.on("exit", (code) => {
-            if (code !== 0) {
-                mp3ToWav.stderr.on("data", (data) => {
-                    reject(data);
-                });
-            } else {
-                mp3ToWav.stdout.on("data", (data) => {
-                    resolve(JSON.parse(data));
-                });
-            }
-        });
+        if (mp3ToWav) {
+            mp3ToWav.on("exit", (code) => {
+                if (code !== 0) {
+                    mp3ToWav.stderr.on("data", (data) => {
+                        reject(data);
+                    });
+                } else {
+                    mp3ToWav.stdout.on("data", (data) => {
+                        resolve(JSON.parse(data));
+                    });
+                }
+            });
+        } else {
+            resolve("no conversion");
+        }
     }).then((data, err) => {
         if (err) {
             console.log(err);
             return err;
         }
+
+        console.log(data);
 
         songCmd = spawn(
             `sudo`,
