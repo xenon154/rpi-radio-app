@@ -1,4 +1,4 @@
-const { exec } = require("child_process");
+const spawn = require("child_process").spawn;
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
 const express = require("express");
@@ -27,6 +27,32 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage });
+
+let songQueue = [];
+let currSong = 0;
+
+let songCmd;
+
+function playSong(fn) {
+    songCmd = spawn(
+        `cd ~/fm_transmitter && sudo ./fm_transmitter -r -f 103.1 ${path.resolve(
+            "../../uploads/" + fn.toString()
+        )}`,
+        { detached: true }
+    );
+}
+
+function stopSong() {
+    if (songCmd) {
+        process.kill(-songCmd.pid);
+    }
+}
+
+io.on("connection", (socket) => {
+    socket.on("playSong", (fn) => {
+        playSong(fn);
+    });
+});
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../web", "index.html"));
@@ -65,10 +91,6 @@ app.get("/api/uploads", (req, res) => {
 
         res.send(files);
     });
-});
-
-io.on("connection", (socket) => {
-    console.log("New connection");
 });
 
 const PORT = process.env.port || 3142;
