@@ -34,36 +34,48 @@ let currSong = 0;
 let songCmd;
 
 function playSong(fn) {
-    // songCmd = spawn(
-    //     `sudo`,
-    //     [
-    //         `bash`,
-    //         `$HOME/fm_transmitter/fm_transmitter`,
-    //         `-r`,
-    //         `-f`,
-    //         ` 103.1`,
-    //         `${path.resolve("uploads/" + fn.toString())}`
-    //     ],
-    //     { detached: true }
-    // );
-    songCmd = spawn(
-        `sh`,
-        [
-            `-c`,
-            `sox ${path.resolve(
-                "uploads/" + fn.toString()
-            )} -r 22050 -c 1 -b 16 -t wav - | sudo ./fm_transmitter -f 100.6 - | sudo $HOME/fm_transmitter/fm_transmitter -r -f 103.1 ${path.resolve(
-                "uploads/" + fn.toString()
-            )}`
-        ],
-        { detached: true }
-    );
+    let mp3ToWav = spawn(`sox`, [
+        `${path.resolve("uploads/" + fn.toString())}`,
+        `${path.resolve("uploads/" + path.parse(fn).name + ".wav")}`
+    ]);
 
-    songCmd.on("error", (err) => {
-        console.log("Error broadcasting song: " + err);
+    let processes = new Promise((resolve, reject) => {
+        mp3ToWav.on("exit", (code) => {
+            if (code !== 0) {
+                mp3ToWav.stderr.on("data", (data) => {
+                    reject(data);
+                });
+            } else {
+                mp3ToWav.stdout.on("data", (data) => {
+                    resolve(JSON.parse(data));
+                });
+            }
+        });
+    }).then((data, err) => {
+        if (err) {
+            console.log(err);
+            return err;
+        }
+
+        songCmd = spawn(
+            `sudo`,
+            [
+                `bash`,
+                `$HOME/fm_transmitter/src/pi_fm_rds`,
+                `-r`,
+                `-f`,
+                ` 103.1`,
+                `${path.resolve("uploads/" + path.parse(fn).name + ".wav")}`
+            ],
+            { detached: true }
+        );
+
+        songCmd.on("error", (err) => {
+            console.log("Error broadcasting song: " + err);
+        });
+
+        console.log("Playing new song: " + path.parse(fn).name);
     });
-
-    console.log("Playing new song: " + path.parse(fn).name);
 }
 
 function stopSong() {
