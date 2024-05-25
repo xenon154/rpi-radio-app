@@ -34,16 +34,16 @@ let currSong = 0;
 let songCmd;
 
 function playSong(fn) {
-    try {
-        songCmd = spawn(
-            `cd ~/fm_transmitter && sudo bash ./fm_transmitter -r -f 103.1 ${path.resolve(
-                "uploads/" + fn.toString()
-            )}`,
-            { detached: true }
-        );
-    } catch (err) {
-        console.error("Error broadcasting song: " + err);
-    }
+    songCmd = spawn(
+        `cd ~/fm_transmitter && sudo bash ./fm_transmitter -r -f 103.1 ${path.resolve(
+            "uploads/" + fn.toString()
+        )}`,
+        { detached: true }
+    );
+
+    songCmd.on("error", (err) => {
+        console.log("Error broadcasting song: " + err);
+    });
 }
 
 function stopSong() {
