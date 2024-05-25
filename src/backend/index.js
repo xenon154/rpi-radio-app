@@ -38,7 +38,7 @@ function playSong(fn) {
         `sudo`,
         [
             `bash`,
-            `$HOME/fm_transmitter`,
+            `$HOME/fm_transmitter/fm_transmitter`,
             `-r`,
             `-f`,
             ` 103.1`,
