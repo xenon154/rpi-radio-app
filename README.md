@@ -7,6 +7,8 @@ A web application for Debian to remotely broadcast FM radio from a Raspberry Pi.
 -   [Node.js](https://nodejs.org)
 -   [npm](https://npmjs.org)
 
+Assuming you are running this on a Debian based operating system, you can install both of these by running ```sudo apt install npm nodejs```.
+
 # Install
 
 To install rpi-radio-app, run these commands all together or one by one:
