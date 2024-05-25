@@ -19,7 +19,7 @@ cd rpi-radio-app
 npm run build
 ```
 
-Once the app finishes installing, you can run rpi-radio-app with `npm start` or `npm run start`
+Once the app finishes installing, you can run rpi-radio-app with `npm start` or `npm run start`. It is important that you run the application as the same user you installed it with.
 
 # Credits
 
