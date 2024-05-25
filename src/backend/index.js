@@ -35,7 +35,7 @@ let songCmd;
 
 function playSong(fn) {
     songCmd = spawn(
-        `cd ~/fm_transmitter && sudo ./fm_transmitter -r -f 103.1 ${path.resolve(
+        `cd ~/fm_transmitter && sudo bash ./fm_transmitter -r -f 103.1 ${path.resolve(
             "uploads/" + fn.toString()
         )}`,
         { detached: true }
