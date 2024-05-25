@@ -12,12 +12,15 @@
         <link rel="stylesheet" href="styles/main.css" />
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <title>rpi-radio-app</title>
     </head>
     <body onload="updateList()">
+        <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
         <script src="scripts/post.js"></script>
         <script src="scripts/update-list.js"></script>
-        <script src="scripts/main.js"></script>
+        <script type="module" src="scripts/main.js"></script>
+        <script type="module" src="scripts/broadcast.js"></script>
 
         <h1 class="is-size-1">
             This is a demo page to confirm that rpi-radio-app's web server is up
@@ -66,6 +69,7 @@
             </form>
         </div>
 
+        <h1 class="is-size-3">Uploaded Songs</h1>
         <ul id="songs"></ul>
     </body>
 </html>

@@ -6,7 +6,7 @@ async function updateList() {
         if (!listedSongs.includes(song)) {
             let ul = document.querySelector("ul");
             let li = document.createElement("li");
-            li.innerText = song;
+            li.innerHTML = `<a href="javascript:broadcastSong(${song})">${song}</a>`;
             li.id = "song-" + songs.indexOf(song);
 
             ul.appendChild(li);
