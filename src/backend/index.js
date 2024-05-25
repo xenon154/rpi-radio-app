@@ -1,4 +1,4 @@
-const spawn = require("child_process").spawn;
+const { spawn } = require("node:child_process");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
 const express = require("express");
