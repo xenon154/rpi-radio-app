@@ -2,7 +2,7 @@ RPI_RADIO_DIR=$(pwd)
 
 mkdir uploads
 sudo apt-get update
-sudo apt-get install make build-essential libraspberrypi-dev npm
+sudo apt-get install make build-essential libraspberrypi-dev npm sox libsox-fmt-mp3
 sudo npm i express multer serve-index socket.io
 cd
 if test -d ~/fm_transmitter; then

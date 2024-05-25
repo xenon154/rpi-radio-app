@@ -34,15 +34,27 @@ let currSong = 0;
 let songCmd;
 
 function playSong(fn) {
+    // songCmd = spawn(
+    //     `sudo`,
+    //     [
+    //         `bash`,
+    //         `$HOME/fm_transmitter/fm_transmitter`,
+    //         `-r`,
+    //         `-f`,
+    //         ` 103.1`,
+    //         `${path.resolve("uploads/" + fn.toString())}`
+    //     ],
+    //     { detached: true }
+    // );
     songCmd = spawn(
-        `sudo`,
+        `sh`,
         [
-            `bash`,
-            `$HOME/fm_transmitter/fm_transmitter`,
-            `-r`,
-            `-f`,
-            ` 103.1`,
-            `${path.resolve("uploads/" + fn.toString())}`
+            `-c`,
+            `sox ${path.resolve(
+                "uploads/" + fn.toString()
+            )} -r 22050 -c 1 -b 16 -t wav - | sudo ./fm_transmitter -f 100.6 - | sudo $HOME/fm_transmitter/fm_transmitter -r -f 103.1 ${path.resolve(
+                "uploads/" + fn.toString()
+            )}`
         ],
         { detached: true }
     );
