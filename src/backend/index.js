@@ -1,5 +1,5 @@
 const { exec } = require("child_process");
-const { createServer } = require("http");
+const { createServer } = require("node:http");
 const { Server } = require("socket.io");
 const express = require("express");
 const path = require("path");
@@ -73,6 +73,6 @@ io.on("connection", (socket) => {
 
 const PORT = process.env.port || 3142;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log("rpi-radio-app is listening at localhost:3142");
 });
