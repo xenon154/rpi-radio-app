@@ -35,12 +35,22 @@ let songCmd;
 
 function playSong(fn) {
     let mp3ToWav;
-    if (!path.resolve("uploads/" + path.parse(fn).name + ".wav")) {
+    if (
+        !path.resolve(
+            "$HOME/rpi-radio-app/uploads/" + path.parse(fn).name + ".wav"
+        )
+    ) {
         let mp3ToWav = spawn(`sox`, [
             `${path.resolve("uploads/" + fn.toString())}`,
             `${path.resolve("uploads/" + path.parse(fn).name + ".wav")}`
         ]);
     }
+
+    console.log(
+        path.resolve(
+            "$HOME/rpi-radio-app/uploads/" + path.parse(fn).name + ".wav"
+        )
+    );
 
     let processes = new Promise((resolve, reject) => {
         if (!!mp3ToWav) {
