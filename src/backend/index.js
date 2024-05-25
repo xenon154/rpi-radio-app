@@ -50,6 +50,8 @@ function playSong(fn) {
     songCmd.on("error", (err) => {
         console.log("Error broadcasting song: " + err);
     });
+
+    console.log("Playing new song: " + path.parse(fn).name);
 }
 
 function stopSong() {
