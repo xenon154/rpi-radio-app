@@ -34,6 +34,7 @@ let currSong = 0;
 let songCmd;
 
 function playSong(fn) {
+    let mp3ToWav;
     if (!path.resolve("uploads/" + path.parse(fn).name + ".wav")) {
         let mp3ToWav = spawn(`sox`, [
             `${path.resolve("uploads/" + fn.toString())}`,
@@ -42,7 +43,7 @@ function playSong(fn) {
     }
 
     let processes = new Promise((resolve, reject) => {
-        if (mp3ToWav) {
+        if (!!mp3ToWav) {
             mp3ToWav.on("exit", (code) => {
                 if (code !== 0) {
                     mp3ToWav.stderr.on("data", (data) => {
