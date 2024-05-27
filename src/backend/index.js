@@ -51,7 +51,7 @@ async function playSong(fn) {
     }
 
     songCmd = exec(
-        `sudo bash $HOME/fm_transmitter/src/pi_fm_rds -freq 103.1 -audio ${path.resolve(
+        `sudo -s $HOME/fm_transmitter/src/pi_fm_rds -freq 103.1 -audio ${path.resolve(
             "uploads/" + path.parse(fn).name + ".wav"
         )}`,
         (err, stdout, stderr) => {
