@@ -10,5 +10,5 @@ if test -d ~/fm_transmitter; then
 else 
     git clone https://github.com/markondej/fm_transmitter
     cd fm_transmitter
-    make
+    make GPIO21=1
 fi
