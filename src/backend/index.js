@@ -54,9 +54,7 @@ async function playSong(fn) {
             wav_converted = await new Mp3ToWav(
                 path.resolve("uploads/" + fn),
                 path.resolve(
-                    "uploads/" +
-                        path.parse(fn).name +
-                        ".wav"
+                    "uploads/"
                 )
             ).exec();
         }
