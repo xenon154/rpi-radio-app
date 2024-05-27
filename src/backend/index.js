@@ -39,22 +39,22 @@ async function playSong(fn) {
 
     console.log(
         path.resolve(
-            "$HOME/rpi-radio-app/uploads/" + path.parse(fn).name + ".wav"
+            "uploads/" + path.parse(fn).name + ".wav"
         )
     );
 
     if (
         !fs.existsSync(
             path.resolve(
-                "$HOME/rpi-radio-app/uploads/" + path.parse(fn).name + ".wav"
+                "uploads/" + path.parse(fn).name + ".wav"
             )
         )
     ) {
         if (path.extname(fn) !== ".wav") {
             wav_converted = await new Mp3ToWav(
-                path.resolve("$HOME/rpi-radio-app/uploads/" + fn),
+                path.resolve("uploads/" + fn),
                 path.resolve(
-                    "$HOME/rpi-radio-app/uploads/" +
+                    "uploads/" +
                         path.parse(fn).name +
                         ".wav"
                 )
