@@ -52,8 +52,13 @@ async function playSong(fn) {
     ) {
         if (path.extname(fn) !== ".wav") {
             wav_converted = await new Mp3ToWav(
-                path.resolve("$HOME/rpi-radio-app/uploads/" + fn)
-            );
+                path.resolve("$HOME/rpi-radio-app/uploads/" + fn),
+                path.resolve(
+                    "$HOME/rpi-radio-app/uploads/" +
+                        path.parse(fn).name +
+                        ".wav"
+                )
+            ).exec();
         }
     }
 
