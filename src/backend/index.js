@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const serveIndex = require("serve-index");
 const multer = require("multer");
+const Mp3ToWav = require("mp3-to-wav");
 
 const app = express();
 
@@ -33,18 +34,8 @@ let currSong = 0;
 
 let songCmd;
 
-function playSong(fn) {
-    let mp3ToWav;
-    if (
-        !path.resolve(
-            "$HOME/rpi-radio-app/uploads/" + path.parse(fn).name + ".wav"
-        )
-    ) {
-        let mp3ToWav = spawn(`sox`, [
-            `${path.resolve("uploads/" + fn.toString())}`,
-            `${path.resolve("uploads/" + path.parse(fn).name + ".wav")}`
-        ]);
-    }
+async function playSong(fn) {
+    let wav_converted;
 
     console.log(
         path.resolve(
@@ -52,49 +43,38 @@ function playSong(fn) {
         )
     );
 
-    let processes = new Promise((resolve, reject) => {
-        if (!!mp3ToWav) {
-            mp3ToWav.on("exit", (code) => {
-                if (code !== 0) {
-                    mp3ToWav.stderr.on("data", (data) => {
-                        reject(data);
-                    });
-                } else {
-                    mp3ToWav.stdout.on("data", (data) => {
-                        resolve(JSON.parse(data));
-                    });
-                }
-            });
-        } else {
-            resolve("no conversion");
+    if (
+        !fs.existsSync(
+            path.resolve(
+                "$HOME/rpi-radio-app/uploads/" + path.parse(fn).name + ".wav"
+            )
+        )
+    ) {
+        if (path.extname(fn) !== ".wav") {
+            wav_converted = await new Mp3ToWav(
+                path.resolve("$HOME/rpi-radio-app/uploads/" + fn)
+            );
         }
-    }).then((data, err) => {
-        if (err) {
-            console.log(err);
-            return err;
-        }
+    }
 
-        console.log(data);
+    songCmd = spawn(
+        `sudo`,
+        [
+            `bash`,
+            `$HOME/fm_transmitter/src/pi_fm_rds`,
+            `-r`,
+            `-f`,
+            ` 103.1`,
+            `${path.resolve("uploads/" + path.parse(fn).name + ".wav")}`
+        ],
+        { detached: true }
+    );
 
-        songCmd = spawn(
-            `sudo`,
-            [
-                `bash`,
-                `$HOME/fm_transmitter/src/pi_fm_rds`,
-                `-r`,
-                `-f`,
-                ` 103.1`,
-                `${path.resolve("uploads/" + path.parse(fn).name + ".wav")}`
-            ],
-            { detached: true }
-        );
-
-        songCmd.on("error", (err) => {
-            console.log("Error broadcasting song: " + err);
-        });
-
-        console.log("Playing new song: " + path.parse(fn).name);
+    songCmd.on("error", (err) => {
+        console.log("Error broadcasting song: " + err);
     });
+
+    console.log("Playing new song: " + path.parse(fn).name);
 }
 
 function stopSong() {
@@ -103,9 +83,9 @@ function stopSong() {
     }
 }
 
-io.on("connection", (socket) => {
-    socket.on("playSong", (fn) => {
-        playSong(fn);
+io.on("connection", async (socket) => {
+    socket.on("playSong", async (fn) => {
+        await playSong(fn);
     });
 });
 
