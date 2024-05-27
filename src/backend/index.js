@@ -1,4 +1,4 @@
-const { spawn } = require("node:child_process");
+const { spawn, exec } = require("node:child_process");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
 const express = require("express");
@@ -37,45 +37,34 @@ let songCmd;
 async function playSong(fn) {
     let wav_converted;
 
-    console.log(
-        path.resolve(
-            "uploads/" + path.parse(fn).name + ".wav"
-        )
-    );
+    console.log(path.resolve("uploads/" + path.parse(fn).name + ".wav"));
 
     if (
-        !fs.existsSync(
-            path.resolve(
-                "uploads/" + path.parse(fn).name + ".wav"
-            )
-        )
+        !fs.existsSync(path.resolve("uploads/" + path.parse(fn).name + ".wav"))
     ) {
         if (path.extname(fn) !== ".wav") {
             wav_converted = await new Mp3ToWav(
                 path.resolve("uploads/" + fn),
-                path.resolve(
-                    "uploads/"
-                )
+                path.resolve("uploads/")
             ).exec();
         }
     }
 
-    songCmd = spawn(
-        `sudo`,
-        [
-            `bash`,
-            `$HOME/fm_transmitter/src/pi_fm_rds`,
-            `-r`,
-            `-f`,
-            ` 103.1`,
-            `${path.resolve("uploads/" + path.parse(fn).name + ".wav")}`
-        ],
+    songCmd = exec(
+        `sudo bash $HOME/fm_transmitter/src/pi_fm_rds -r -f 103.1 ${path.resolve(
+            "uploads/" + path.parse(fn).name + ".wav"
+        )}`,
+        (err, stdout, stderr) => {
+            if (err) {
+                console.log("Error broadcasting song.")
+                return;
+            }
+
+            console.log(`Output of song broadcast: ${stdout}`);
+            console.log(`Error while broadcasting song: ${stderr}`);
+        },
         { detached: true }
     );
-
-    songCmd.on("error", (err) => {
-        console.log("Error broadcasting song: " + err);
-    });
 
     console.log("Playing new song: " + path.parse(fn).name);
 }
